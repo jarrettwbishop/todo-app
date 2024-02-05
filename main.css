@@ -45,6 +45,10 @@ a:visited {
 	color: inherit;
 }
 
+li {
+	list-style: none;
+}
+
 button {
 	background-color: var(--primary-900);
 	color: var(--primary-300);
