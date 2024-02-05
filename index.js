@@ -17,23 +17,23 @@ const todoList = [
 	{
 		category: "Inbox",
 		title: "Walk the dog",
-		notes: "",
-		dueDate: "",
-		priority: "",
+		notes: null,
+		dueDate: null,
+		priority: null,
 	},
 	{
 		category: "Inbox",
 		title: "Grocery shopping",
 		notes: "Water, eggs, milk",
-		dueDate: "",
+		dueDate: null,
 		priority: "med",
 	},
 	{
 		category: "Someday",
 		title: "Finish cabinets",
-		notes: "",
+		notes: null,
 		dueDate: "12/31/24",
-		priority: "",
+		priority: null,
 	},
 ];
 
@@ -46,6 +46,33 @@ function createTodo(category, title, notes, dueDate, priority) {
 	todoList.push(newTodo);
 }
 
-export function printTodoList() {
-	console.log(todoList);
+function Category(name) {
+	return {
+		name: name,
+		isEditable: true,
+	};
+}
+
+function createCategory(name) {
+	if (isExistingCategory(name)) {
+		console.error(`Category: '${name}' already exists`);
+	}
+	const newCategory = Category(name);
+	categoryList.push(newCategory);
+}
+
+function printTodoList(category) {
+	const categorizedList = todoList.filter(
+		(todo) => todo.category == category
+	);
+
+	console.log(categorizedList);
+}
+
+function isExistingCategory(name) {
+	for (const category of categoryList) {
+		if ((category.category = name)) {
+			return true;
+		}
+	}
 }
