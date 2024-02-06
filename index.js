@@ -37,6 +37,8 @@ const todoList = [
 	},
 ];
 
+let currentDisplay = "Inbox";
+
 function Todo(category, title, notes, dueDate, priority) {
 	return { category, title, notes, dueDate, priority };
 }
@@ -61,13 +63,35 @@ function createCategory(name) {
 	categoryList.push(newCategory);
 }
 
+const list = document.querySelector(".todo-list");
+
 function printTodoList(category) {
 	const categorizedList = todoList.filter(
 		(todo) => todo.category == category
 	);
 
 	console.log(categorizedList);
+
+	categorizedList.forEach((todo) => {
+		const li = document.createElement("li");
+		const input = document.createElement("input");
+		const p = document.createElement("p");
+
+		input.setAttribute("type", "checkbox");
+
+		li.classList.add("todo-item");
+		input.classList.add("checkbox");
+
+		p.textContent = todo.title;
+
+		li.appendChild(input);
+		li.appendChild(p);
+
+		list.appendChild(li);
+	});
 }
+
+printTodoList("Inbox");
 
 function isExistingCategory(name) {
 	for (const category of categoryList) {
