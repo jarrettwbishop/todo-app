@@ -23,16 +23,47 @@
 		/>
 	</head>
 	<body>
-		<header>Header</header>
-		<main>Main</main>
-		<footer>
-			<p>
-				Created by
-				<a href="https://github.com/jarrettwbishop"
-					>Jarrett Bishop <i class="fa-github fa-brands"></i
-				></a>
-			</p>
-		</footer>
+		<div class="container">
+			<div class="sidebar">
+				<ul class="default-categories">
+					<li class="active-category">
+						<i class="fa-solid fa-inbox"></i> Inbox
+					</li>
+					<li><i class="fa-solid fa-clock"></i> Today</li>
+					<li><i class="fa-solid fa-spinner"></i> Someday</li>
+				</ul>
+				<div class="divider"></div>
+				<ul class="user-categories">
+					<li>Life</li>
+					<li>School</li>
+					<li>Grocery List</li>
+					<li>To Do App</li>
+				</ul>
+			</div>
+			<main>
+				<h1 class="category-header">
+					<i class="fa-solid fa-inbox"></i> Inbox
+				</h1>
+				<ul>
+					<li><input type="checkbox" id="1" /> one</li>
+					<li><input type="checkbox" id="2" /> two</li>
+					<li><input type="checkbox" id="3" /> three</li>
+					<li><input type="checkbox" id="4" /> four</li>
+					<li><input type="checkbox" id="5" /> five</li>
+				</ul>
+				<button class="create-todo-btn">
+					<i class="fa-solid fa-plus"></i>
+				</button>
+			</main>
+			<footer>
+				<p>
+					Created by
+					<a href="https://github.com/jarrettwbishop"
+						>Jarrett Bishop <i class="fa-github fa-brands"></i
+					></a>
+				</p>
+			</footer>
+		</div>
 
 		<script src="index.js"></script>
 	</body>
