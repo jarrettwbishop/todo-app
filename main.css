@@ -35,6 +35,7 @@ body {
 	height: 100%;
 	width: 100%;
 	overflow-x: hidden;
+	box-sizing: border-box;
 }
 
 a {
@@ -74,7 +75,7 @@ body {
 .sidebar {
 	grid-row: 1 / 3;
 	grid-column: 1 / 2;
-	background-color: var(--neutral-900);
+	background-color: var(--neutral-950);
 	padding: 2rem 0.5rem;
 	display: flex;
 	flex-direction: column;
@@ -102,7 +103,7 @@ li {
 }
 
 .active-category {
-	background-color: var(--neutral-700);
+	background-color: var(--neutral-800);
 }
 
 .divider {
@@ -128,7 +129,7 @@ main {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
-	background-color: var(--neutral-800);
+	background-color: var(--neutral-900);
 }
 
 main ul {
@@ -136,7 +137,23 @@ main ul {
 }
 
 input[type="checkbox"] {
-	outline: none;
+	appearance: none;
+}
+
+.checkbox {
+	border: 2px var(--neutral-700) solid;
+	border-radius: 4px;
+	padding: 6px;
+}
+
+.checkbox:checked {
+	background-color: rgb(120, 193, 235);
+	border: 2px rgb(120, 193, 235) solid;
+	transition: background 0.5s;
+}
+
+.checkbox:hover {
+	transform: scale(1.2);
 }
 
 .create-todo-btn {
@@ -153,7 +170,7 @@ input[type="checkbox"] {
 footer {
 	grid-row: 2 / 3;
 	grid-column: 2 / 3;
-	background-color: var(--neutral-800);
+	background-color: var(--neutral-900);
 	width: 100%;
 	display: flex;
 	justify-content: center;
