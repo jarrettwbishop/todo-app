@@ -68,7 +68,7 @@ function createCategory(name) {
 	}
 	userCategoryList.push(name);
 	console.log("category added");
-	reloadDisplay();
+	reloadDisplay(currentDisplay);
 }
 
 function addUserCategoryEventListeners() {
