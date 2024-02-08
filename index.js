@@ -23,6 +23,7 @@ const todoList = [
 		dueDate: null,
 		priority: null,
 		id: 1,
+		isCompleted: true,
 	},
 	{
 		category: "Inbox",
@@ -31,6 +32,7 @@ const todoList = [
 		dueDate: null,
 		priority: "med",
 		id: 2,
+		isCompleted: false,
 	},
 	{
 		category: "Someday",
@@ -39,6 +41,7 @@ const todoList = [
 		dueDate: "12/31/24",
 		priority: null,
 		id: 3,
+		isCompleted: false,
 	},
 ];
 
@@ -50,14 +53,15 @@ const defaultCategories = document.querySelector(
 
 let currentDisplay = "Inbox";
 
-function Todo(category, title, notes, dueDate, priority, id) {
-	return { category, title, notes, dueDate, priority, id };
+function Todo(category, title, notes, dueDate, priority, id, isCompleted) {
+	return { category, title, notes, dueDate, priority, id, isCompleted };
 }
 
 function createTodo(category, title, notes, dueDate, priority) {
 	const id = Date.now();
-	const newTodo = Todo(category, title, notes, dueDate, priority, id);
+	const newTodo = Todo(category, title, notes, dueDate, priority, id, false);
 	todoList.push(newTodo);
+	reloadDisplay();
 }
 
 // function Category(name) {
@@ -109,6 +113,12 @@ function displayTodoList(category) {
 
 		p.textContent = todo.title;
 
+		if (todo.isCompleted) input.checked = true;
+
+		input.addEventListener("click", () => {
+			todo.isCompleted = !todo.isCompleted;
+		});
+
 		li.appendChild(input);
 		li.appendChild(p);
 
@@ -145,10 +155,10 @@ function changeDisplay(newDisplay) {
 	reloadDisplay(currentDisplay);
 }
 
+// ***** BUG: MULTIPLE EVENT LISTENERS ADDED TO DEFAULT CATEGORIES
 function addEventListeners() {
 	for (let i = 0; i < defaultCategories.length; i++) {
 		defaultCategories[i].addEventListener("click", () => {
-			console.log(`${defaultCategories[i]} clicked`);
 			for (const element of document.getElementsByClassName(
 				"active-category"
 			)) {
