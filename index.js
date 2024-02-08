@@ -1,17 +1,19 @@
-const categoryList = [
-	{
-		category: "Inbox",
-		isEditable: false,
-	},
-	{
-		category: "Today",
-		isEditable: false,
-	},
-	{
-		category: "Someday",
-		isEditable: false,
-	},
-];
+// const categoryList = [
+// 	{
+// 		category: "Inbox",
+// 		isEditable: false,
+// 	},
+// 	{
+// 		category: "Today",
+// 		isEditable: false,
+// 	},
+// 	{
+// 		category: "Someday",
+// 		isEditable: false,
+// 	},
+// ];
+
+const userCategoryList = ["School", "Work", "Side Hustle"];
 
 const todoList = [
 	{
@@ -40,6 +42,7 @@ const todoList = [
 	},
 ];
 
+const userCategories = document.querySelector(".user-categories");
 const list = document.querySelector(".todo-list");
 const defaultCategories = document.querySelector(
 	".default-categories"
@@ -57,19 +60,33 @@ function createTodo(category, title, notes, dueDate, priority) {
 	todoList.push(newTodo);
 }
 
-function Category(name) {
-	return {
-		name: name,
-		isEditable: true,
-	};
-}
+// function Category(name) {
+// 	return {
+// 		name: name,
+// 		isEditable: true,
+// 	};
+// }
 
 function createCategory(name) {
 	if (isExistingCategory(name)) {
 		console.error(`Category: '${name}' already exists`);
+		return;
 	}
-	const newCategory = Category(name);
-	categoryList.push(newCategory);
+	userCategoryList.push(name);
+	console.log("category added");
+	reloadDisplay();
+}
+
+function displayUserCategories() {
+	userCategoryList.forEach((userCategory) => {
+		const li = document.createElement("li");
+		const p = document.createElement("p");
+
+		p.textContent = userCategory;
+
+		li.appendChild(p);
+		userCategories.appendChild(li);
+	});
 }
 
 function displayTodoList(category) {
@@ -103,8 +120,8 @@ function displayTodoList(category) {
 }
 
 function isExistingCategory(name) {
-	for (const category of categoryList) {
-		if ((category.category = name)) {
+	for (const category of userCategoryList) {
+		if (category == name) {
 			return true;
 		}
 	}
@@ -114,24 +131,47 @@ function reloadDisplay(currentDisplay) {
 	while (list.firstChild) {
 		list.removeChild(list.firstChild);
 	}
+	while (userCategories.firstChild) {
+		userCategories.removeChild(userCategories.firstChild);
+	}
 	displayTodoList(currentDisplay);
+	displayUserCategories();
+	addEventListeners();
 }
 
 function changeDisplay(newDisplay) {
+	console.log(`Change display to: ${newDisplay}`);
 	currentDisplay = newDisplay;
 	reloadDisplay(currentDisplay);
 }
 
-for (let i = 0; i < defaultCategories.length; i++) {
-	defaultCategories[i].addEventListener("click", () => {
-		for (const element of document.getElementsByClassName(
-			"active-category"
-		)) {
-			element.classList.remove("active-category");
-		}
-		changeDisplay(defaultCategories[i].lastElementChild.textContent);
-		defaultCategories[i].classList.add("active-category");
-	});
+function addEventListeners() {
+	for (let i = 0; i < defaultCategories.length; i++) {
+		defaultCategories[i].addEventListener("click", () => {
+			console.log(`${defaultCategories[i]} clicked`);
+			for (const element of document.getElementsByClassName(
+				"active-category"
+			)) {
+				element.classList.remove("active-category");
+			}
+			changeDisplay(defaultCategories[i].lastElementChild.textContent);
+			defaultCategories[i].classList.add("active-category");
+		});
+	}
+
+	for (let i = 0; i < userCategories.children.length; i++) {
+		userCategories.children[i].addEventListener("click", () => {
+			console.log(`${userCategories.children[i]} clicked`);
+			for (const element of document.getElementsByClassName(
+				"active-category"
+			)) {
+				element.classList.remove("active-category");
+			}
+			changeDisplay(userCategories.children[i].textContent);
+			userCategories.children[i].classList.add("active-category");
+		});
+	}
 }
 
-displayTodoList("Inbox");
+reloadDisplay("Inbox");
+addEventListeners();
