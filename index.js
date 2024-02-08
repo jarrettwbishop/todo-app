@@ -97,6 +97,9 @@ function displayTodoList(category) {
 
 		list.appendChild(li);
 	});
+
+	const categoryHeader = document.querySelector(".category-header");
+	categoryHeader.textContent = category;
 }
 
 function isExistingCategory(name) {
