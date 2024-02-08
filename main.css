@@ -115,6 +115,7 @@ li:hover {
 
 .active-category {
 	background-color: var(--neutral-800);
+	border-radius: 3px;
 }
 
 .divider {
@@ -167,6 +168,7 @@ input[type="checkbox"] {
 
 .checkbox:hover {
 	transform: scale(1.2);
+	transition: transform 0.1s;
 }
 
 .create-todo-btn {
@@ -183,6 +185,7 @@ input[type="checkbox"] {
 .create-todo-btn:hover {
 	transform: scale(1.05);
 	cursor: pointer;
+	transition: transform 0.2s;
 }
 
 footer {
