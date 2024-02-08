@@ -20,6 +20,7 @@ const todoList = [
 		notes: null,
 		dueDate: null,
 		priority: null,
+		id: 1,
 	},
 	{
 		category: "Inbox",
@@ -27,6 +28,7 @@ const todoList = [
 		notes: "Water, eggs, milk",
 		dueDate: null,
 		priority: "med",
+		id: 2,
 	},
 	{
 		category: "Someday",
@@ -34,17 +36,24 @@ const todoList = [
 		notes: null,
 		dueDate: "12/31/24",
 		priority: null,
+		id: 3,
 	},
 ];
+
+const list = document.querySelector(".todo-list");
+const defaultCategories = document.querySelector(
+	".default-categories"
+).children;
 
 let currentDisplay = "Inbox";
 
 function Todo(category, title, notes, dueDate, priority) {
-	return { category, title, notes, dueDate, priority };
+	return { category, title, notes, dueDate, priority, id };
 }
 
 function createTodo(category, title, notes, dueDate, priority) {
-	const newTodo = Todo(category, title, notes, dueDate, priority);
+	const id = Date.now();
+	const newTodo = Todo(category, title, notes, dueDate, priority, id);
 	todoList.push(newTodo);
 }
 
@@ -63,9 +72,7 @@ function createCategory(name) {
 	categoryList.push(newCategory);
 }
 
-const list = document.querySelector(".todo-list");
-
-function printTodoList(category) {
+function displayTodoList(category) {
 	const categorizedList = todoList.filter(
 		(todo) => todo.category == category
 	);
@@ -77,6 +84,7 @@ function printTodoList(category) {
 		const input = document.createElement("input");
 		const p = document.createElement("p");
 
+		li.setAttribute("id", todo.id);
 		input.setAttribute("type", "checkbox");
 
 		li.classList.add("todo-item");
@@ -91,8 +99,6 @@ function printTodoList(category) {
 	});
 }
 
-printTodoList("Inbox");
-
 function isExistingCategory(name) {
 	for (const category of categoryList) {
 		if ((category.category = name)) {
@@ -100,3 +106,29 @@ function isExistingCategory(name) {
 		}
 	}
 }
+
+function reloadDisplay(currentDisplay) {
+	while (list.firstChild) {
+		list.removeChild(list.firstChild);
+	}
+	displayTodoList(currentDisplay);
+}
+
+function changeDisplay(newDisplay) {
+	currentDisplay = newDisplay;
+	reloadDisplay(currentDisplay);
+}
+
+for (let i = 0; i < defaultCategories.length; i++) {
+	defaultCategories[i].addEventListener("click", () => {
+		for (const element of document.getElementsByClassName(
+			"active-category"
+		)) {
+			element.classList.remove("active-category");
+		}
+		changeDisplay(defaultCategories[i].lastElementChild.textContent);
+		defaultCategories[i].classList.add("active-category");
+	});
+}
+
+displayTodoList("Inbox");
