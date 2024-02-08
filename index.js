@@ -50,7 +50,7 @@ const defaultCategories = document.querySelector(
 
 let currentDisplay = "Inbox";
 
-function Todo(category, title, notes, dueDate, priority) {
+function Todo(category, title, notes, dueDate, priority, id) {
 	return { category, title, notes, dueDate, priority, id };
 }
 
