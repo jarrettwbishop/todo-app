@@ -1,18 +1,3 @@
-// const categoryList = [
-// 	{
-// 		category: "Inbox",
-// 		isEditable: false,
-// 	},
-// 	{
-// 		category: "Today",
-// 		isEditable: false,
-// 	},
-// 	{
-// 		category: "Someday",
-// 		isEditable: false,
-// 	},
-// ];
-
 const userCategoryList = ["School", "Work", "Side Hustle"];
 
 const todoList = [
@@ -53,6 +38,18 @@ const defaultCategories = document.querySelector(
 
 let currentDisplay = "Inbox";
 
+for (let i = 0; i < defaultCategories.length; i++) {
+	defaultCategories[i].addEventListener("click", () => {
+		for (const element of document.getElementsByClassName(
+			"active-category"
+		)) {
+			element.classList.remove("active-category");
+		}
+		changeDisplay(defaultCategories[i].lastElementChild.textContent);
+		defaultCategories[i].classList.add("active-category");
+	});
+}
+
 function Todo(category, title, notes, dueDate, priority, id, isCompleted) {
 	return { category, title, notes, dueDate, priority, id, isCompleted };
 }
@@ -64,13 +61,6 @@ function createTodo(category, title, notes, dueDate, priority) {
 	reloadDisplay();
 }
 
-// function Category(name) {
-// 	return {
-// 		name: name,
-// 		isEditable: true,
-// 	};
-// }
-
 function createCategory(name) {
 	if (isExistingCategory(name)) {
 		console.error(`Category: '${name}' already exists`);
@@ -79,6 +69,28 @@ function createCategory(name) {
 	userCategoryList.push(name);
 	console.log("category added");
 	reloadDisplay();
+}
+
+function addUserCategoryEventListeners() {
+	const userCategoryListItems =
+		document.querySelector(".user-categories").children;
+
+	for (let i = 0; i < userCategoryListItems.length; i++) {
+		userCategoryListItems[i].addEventListener("click", () => {
+			for (const element of document.getElementsByClassName(
+				"active-category"
+			)) {
+				element.classList.remove("active-category");
+			}
+			changeDisplay(
+				userCategoryListItems[i].firstElementChild.textContent
+			);
+
+			userCategoryListItems[i].classList.add("active-category");
+			userCategoryListItems[i].classList.add("test");
+			console.log(userCategoryListItems[i].classList);
+		});
+	}
 }
 
 function displayUserCategories() {
@@ -146,7 +158,7 @@ function reloadDisplay(currentDisplay) {
 	}
 	displayTodoList(currentDisplay);
 	displayUserCategories();
-	addEventListeners();
+	addUserCategoryEventListeners();
 }
 
 function changeDisplay(newDisplay) {
@@ -155,33 +167,4 @@ function changeDisplay(newDisplay) {
 	reloadDisplay(currentDisplay);
 }
 
-// ***** BUG: MULTIPLE EVENT LISTENERS ADDED TO DEFAULT CATEGORIES
-function addEventListeners() {
-	for (let i = 0; i < defaultCategories.length; i++) {
-		defaultCategories[i].addEventListener("click", () => {
-			for (const element of document.getElementsByClassName(
-				"active-category"
-			)) {
-				element.classList.remove("active-category");
-			}
-			changeDisplay(defaultCategories[i].lastElementChild.textContent);
-			defaultCategories[i].classList.add("active-category");
-		});
-	}
-
-	for (let i = 0; i < userCategories.children.length; i++) {
-		userCategories.children[i].addEventListener("click", () => {
-			console.log(`${userCategories.children[i]} clicked`);
-			for (const element of document.getElementsByClassName(
-				"active-category"
-			)) {
-				element.classList.remove("active-category");
-			}
-			changeDisplay(userCategories.children[i].textContent);
-			userCategories.children[i].classList.add("active-category");
-		});
-	}
-}
-
 reloadDisplay("Inbox");
-addEventListeners();
